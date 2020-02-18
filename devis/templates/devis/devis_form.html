@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<form id="myForm2" method="post" action="">{% csrf_token %}
+    
+            {{ form.as_p}}
+                        {% for form2 in devisligne_form.forms %}
+                            <div class="lignedevis">
+
+                                {% if form2.instance.pk %}{{ form2.DELETE }}{% endif %}
+                                {{ form2.as_p}}
+
+                            </div>
+                        
+                            
+                        
+              
+            {% endfor %}
+      
+    {{ devisligne_form.management_form }}
+    <input type="submit">
+</form>
+
+
+{%endblock%}

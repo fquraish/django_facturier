@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<form id="myForm" method="post" action="">{% csrf_token %}
+    
+            {{ form.as_p}}
+                        {% for form1 in addresses_form.forms %}
+                            <div class="address">
+
+                                {% if form1.instance.pk %}{{ form1.DELETE }}{% endif %}
+                                {{ form1.as_p}}
+
+                            </div>
+                        
+                            
+                        
+              
+            {% endfor %}
+      
+    {{ addresses_form.management_form }}
+    <input type="submit">
+</form>
+
+
+{%endblock%}

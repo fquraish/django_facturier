@@ -1,0 +1,87 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-12 ">
+            <div class="text-center">
+                <h5>First Name</h5>
+                <p>{{client.first_name}}</p>
+                <h5>Last Name</h5>
+                <p>{{client.last_name}}</p>
+
+            </div>
+            <h5>Telephone</h5>
+            <p>{{client.tel}}</p>
+            <h5>Raison Social</h5>
+            <p>{{client.raison_social}}</p>
+            <h5>Siret</h5>
+            <p>{{client.siret}}</p>
+            <h5>TVA</h5>
+            <p>{{client.tva}}</p>
+            <h5>Email Address</h5>
+            <p>{{client.email}}</p>
+            <h5>Address</h5>
+            {% for adress in client.addresses.all %}
+            <hr>
+            <p>{{adress.city}}</p>
+            <p>{{adress.street}}</p>
+            <p>{{adress.zipcode}}</p>
+            <hr>
+            {% endfor %}
+
+            {% for facture in factures_list %}
+            {{facture.devis}}
+
+            {% endfor %}
+
+
+           
+
+
+            <a href="{% url 'client-update' client.id %}">edit client</a>
+
+<!--  -->
+
+<button class="btn" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
+<div class="modal fade" id="fm-modal-grid" tabindex="-1"
+     role="dialog" aria-labelledBy="fm-modal-grid"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                          <form action="{% url 'client-delete' client.id %}" method="POST">
+                            {% csrf_token %}
+                            <p>Are you sure you want to delete "{{ object }}"?</p>
+                             <input type="submit" value="Confirm">
+                     </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <a href="{% url 'client-delete' client.id %}" class="btn">Delete</a>
+                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+            <!--  -->
+
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

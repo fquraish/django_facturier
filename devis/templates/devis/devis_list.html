@@ -1,0 +1,52 @@
+
+{%extends 'base.html'%}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <a href="{% url 'devis-create' %}">new</a>
+            </div>
+            {% for devis in object_list %}
+            <p>{{ devis }}</p>
+            <div>
+                <a href="{% url 'devis-detail' devis.id %}"> go to</a>
+                <button class="btn" data-toggle="modal" data-target="#fm-modal-grid{{devis.id}}">Delete</button>
+                <div class="modal fade" id="fm-modal-grid{{devis.id}}" tabindex="-1" role="dialog"
+                    aria-labelledBy="fm-modal-grid{{devis.id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <form action="{% url 'devis-delete' devis.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <p>Are you sure you want to delete "{{ object }}"?</p>
+                                                <input type="submit" value="Confirm">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      
+                        </div>
+                    </div>
+    
+            </div>
+    
+            {% endfor %}
+
+        </div>
+        {%endblock%}
+
+       
+
+    </div>
+</div>

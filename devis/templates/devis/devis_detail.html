@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-12 ">
+            {% for devis in devis.lignedevis_set.all %}
+            <h5>Devis</h5>
+            <p>{{devis}}</p>
+            <h5>Description</h5>
+            <p>{{devis.description}}</p>
+            <h5>Quantity</h5>
+            <p>{{devis.quantity}}</p>
+            <h5>Price</h5>
+            <p>{{devis.price}}</p>
+            <h5>Total</h5>
+            <p>{{devis.get_total_item_price}}</p>
+            {% endfor %}
+            <h5>All Total</h5>
+            <p>{{ devis.get_total_final_price }}</p>
+
+
+            {% if pdf == false %}
+            <a href="{% url 'devis-update' devis.id %}">edit devis</a>
+            <a href="{% url 'devis-pdf' devis.id %}" target="_blank" class="btn btn-sm btn-success">Generate Pdf</a>
+
+            <button class="btn" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
+            <div class="modal fade" id="fm-modal-grid" tabindex="-1" role="dialog" aria-labelledBy="fm-modal-grid"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <form action="{% url 'devis-delete' devis.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <p>Are you sure you want to delete "{{ object }}"?</p>
+                                            <input type="submit" value="Confirm">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+         
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
